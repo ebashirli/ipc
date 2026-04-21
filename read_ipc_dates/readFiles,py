@@ -1,0 +1,35 @@
+import pandas as pd
+from pathlib import Path
+
+
+
+# 1. Define the root directory and the sheet name
+root_dir = Path("\\DATA\DataServer\Teknik Ofis\00_SPP2 Taseron Sozlesmeleri")
+target_sheet = "IPC Cover"  # Or use an index like 0 for the first sheet
+
+all_data = []
+
+def read_excel_files(root_dir, target_sheet):
+    # 2. Recursively find all .xlsx and .xls files
+    for file_path in root_dir.rglob("*.xlsx"):
+        print(f"Found file: {file_path.relative_to(root_dir)}")
+        
+        # try:
+        #     # 3. Read the specific sheet
+        #     df = pd.read_excel(file_path, sheet_name=target_sheet)
+            
+        #     # Optional: Add a column to track which file the data came from
+        #     df['source_file'] = file_path.name
+            
+        #     all_data.append(df)
+        #     print(f"Successfully read: {file_path.relative_to(root_dir)}")
+            
+        # except Exception as e:
+        #     print(f"Could not read {file_path.name}: {e}")
+
+    # 4. Combine everything into one big DataFrame
+    if all_data:
+        final_df = pd.concat(all_data, ignore_index=True)
+        print("Consolidation complete!")
+    else:
+        print("No matching files or sheets found.")
